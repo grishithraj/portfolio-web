@@ -1,9 +1,14 @@
+import { Ripple } from "../components/magicui/ripple";
+import { Meteors } from "../components/magicui/meteors";
+
 const Hero = () => {
   return (
     <section
       id="hero"
       className="min-h-screen flex flex-col justify-center items-center text-center"
     >
+      <Ripple />
+      <Meteors />
       <h2 className="text-4xl md:text-6xl font-extrabold mb-4">
         Hi, I'm Rishith
       </h2>

@@ -1,26 +1,94 @@
-const Navbar = () => {
-  return (
-    <nav className="bg-gray-800 py-4 px-6 flex justify-between items-center shadow-md sticky top-0 z-50">
-      <h1 className="text-2xl font-bold text-indigo-400">Rishithraj</h1>
-      <ul className="hidden md:flex gap-6 text-sm uppercase">
-        <li>
-          <a href="#hero" className="hover:text-indigo-400">
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#projects" className="hover:text-indigo-400">
-            Projects
-          </a>
-        </li>
-        <li>
-          <a href="#contact" className="hover:text-indigo-400">
-            Contact
-          </a>
-        </li>
-      </ul>
-    </nav>
-  );
-};
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "../components/ui/resizable-navbar";
+import { useState } from "react";
 
-export default Navbar;
+export function NavbarDemo() {
+  const navItems = [
+    {
+      name: "Features",
+      link: "#",
+    },
+    {
+      name: "Pricing",
+      link: "#pricing",
+    },
+    {
+      name: "Contact",
+      link: "#contact",
+    },
+  ];
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <div className="relative w-full sticky top-0">
+      <Navbar>
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems} />
+          <div className="flex items-center gap-4">
+            <NavbarButton variant="secondary">Login</NavbarButton>
+            <NavbarButton variant="primary">Book a call</NavbarButton>
+          </div>
+        </NavBody>
+
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
+
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          >
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="relative text-neutral-600 dark:text-neutral-300"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+            <div className="flex w-full flex-col gap-4">
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Login
+              </NavbarButton>
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Book a call
+              </NavbarButton>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+
+      {/* Navbar */}
+    </div>
+  );
+}
+
+export default NavbarDemo;
